@@ -1,33 +1,10 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import emailjs from "emailjs-com";
-import {
-  Users,
-  TrendingUp,
-  Award,
-  Heart,
-  MapPin,
-  Briefcase,
-  Clock,
-  X,
-} from "lucide-react";
+import { Users, TrendingUp, Award, Heart, MapPin, Briefcase, Clock } from "lucide-react";
 
 export default function Careers() {
-  const [showForm, setShowForm] = useState(false);
-  const [selectedJob, setSelectedJob] = useState("");
-  const [formData, setFormData] = useState({
-    from_name: "",
-    from_email: "",
-    job_title: "",
-    message: "",
-  });
-  const [statusMessage, setStatusMessage] = useState("");
-
   const benefits = [
     { icon: TrendingUp, title: "Career Growth", description: "Clear path for professional development" },
     { icon: Award, title: "Recognition", description: "Reward excellence and innovation" },
@@ -39,92 +16,66 @@ export default function Careers() {
     {
       title: "Site Engineer Intern",
       department: "Engineering",
-      location: "Chennai, India",
+      location: "Medavakkam, Chennai",
       type: "Internship",
       description: "Assist in site supervision, project documentation, and quality control activities.",
     },
     {
       title: "Graphic Designer",
       department: "Marketing",
-      location: "Chennai, India",
+      location: "Medavakkam, Chennai",
       type: "Full-time (2–3 Years Experience)",
       description: "Create visually engaging designs for branding, social media, and marketing materials.",
     },
     {
       title: "Finance Assistant",
       department: "Finance",
-      location: "Chennai, India",
+      location: "Medavakkam, Chennai",
       type: "Full-time (2–3 Years Experience)",
       description: "Support financial reporting, accounting, and budget management activities.",
     },
     {
       title: "IT Support Intern",
       department: "Technology",
-      location: "Chennai, India",
+      location: "Medavakkam, Chennai",
       type: "Internship",
       description: "Provide technical assistance and troubleshoot IT issues for the team.",
     },
     {
-      title: "HR Executive / Recruiter",
+      title: "HR Recruiter/Manager",
       department: "Human Resources",
-      location: "Chennai, India",
+      location: "Medavakkam, Chennai",
       type: "Full-time",
       description: "Manage recruitment, employee engagement, and HR administrative processes.",
     },
+    {
+      title: "Business Development Recruiter",
+      department: "Sales/BD",
+      location: "Mumbai, Chennai, Bangalore",
+      type: "Full-time (3–4 Years Experience)",
+      description: "Drive business growth by hiring top talent and managing client relationships.",
+    },
   ];
 
+  // Google Form base URL
+  const googleFormBaseURL =
+    "https://docs.google.com/forms/d/e/1FAIpQLSciElUUs33aquCYIiKzBmRJlw2Dv4Kl0EJKRoT-l2CW0JlWlQ/viewform?usp=pp_url";
+
+  // Replace this with the entry ID of the Job Title field in your Google Form
+  const jobTitleEntryID = "entry.1234567890";
+
   const handleApplyClick = (jobTitle: string) => {
-    setSelectedJob(jobTitle);
-    setFormData((prev) => ({ ...prev, job_title: jobTitle }));
-    setShowForm(true);
-    setStatusMessage("");
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const sendEmail = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatusMessage("Sending...");
-
-    emailjs
-      .send(
-        "service_5s7f5n2", // 👉 replace with your EmailJS Service ID
-        "template_n9mega9", // 👉 replace with your EmailJS Template ID
-        {
-          from_name: formData.from_name,
-          from_email: formData.from_email,
-          job_title: formData.job_title,
-          message: formData.message,
-          to_email: "hiring@knockturn.in",
-        },
-        "KUnwgq8AY0dk-tEr1" // 👉 replace with your EmailJS Public Key
-      )
-      .then(
-        () => {
-          setStatusMessage("✅ Application Submitted Successfully!");
-          setFormData({ from_name: "", from_email: "", job_title: "", message: "" });
-        },
-        () => {
-          setStatusMessage("❌ Failed to send. Please try again.");
-        }
-      );
+    const formLink = `${googleFormBaseURL}&${jobTitleEntryID}=${encodeURIComponent(jobTitle)}`;
+    window.open(formLink, "_blank");
   };
 
   return (
     <div className="min-h-screen pt-32 relative">
-      {/* ===== Hero Section ===== */}
-      <section className="py-20" data-testid="section-careers-hero">
+      {/* Hero Section */}
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="text-5xl sm:text-6xl font-bold mb-6 text-gradient">
-              Join Our Team
-            </h1>
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <h1 className="text-5xl sm:text-6xl font-bold mb-6 text-gradient">Join Our Team</h1>
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
               Build your career with a company that values innovation, excellence, and growth.
             </p>
@@ -132,30 +83,17 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* ===== Benefits Section ===== */}
+      {/* Benefits Section */}
       <section className="py-20 bg-card/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
             <h2 className="text-4xl font-bold mb-4 text-gradient">Life at Knockturn</h2>
             <p className="text-xl text-muted-foreground">Why our team loves working here</p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map((benefit, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-              >
+              <motion.div key={index} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: index * 0.1 }} whileHover={{ scale: 1.05 }}>
                 <Card className="h-full glassmorphism border-primary/30 hover:border-primary/60 transition-all">
                   <CardContent className="p-6 text-center">
                     <div className="w-16 h-16 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center mx-auto mb-4">
@@ -171,29 +109,17 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* ===== Job Openings Section ===== */}
-      <section className="py-20" data-testid="section-openings">
+      {/* Job Openings */}
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
             <h2 className="text-4xl font-bold mb-4 text-gradient">Current Openings</h2>
             <p className="text-xl text-muted-foreground">Find your perfect role</p>
           </motion.div>
 
           <div className="space-y-6">
             {openings.map((job, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
+              <motion.div key={index} initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: index * 0.1 }}>
                 <Card className="glassmorphism border-primary/30 hover:border-primary/60 transition-all">
                   <CardContent className="p-8">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
@@ -218,11 +144,7 @@ export default function Careers() {
                           </div>
                         </div>
                       </div>
-                      <Button
-                        size="lg"
-                        className="glow-blue"
-                        onClick={() => handleApplyClick(job.title)}
-                      >
+                      <Button size="lg" className="glow-blue" onClick={() => handleApplyClick(job.title)}>
                         Apply Now
                       </Button>
                     </div>
@@ -233,65 +155,6 @@ export default function Careers() {
           </div>
         </div>
       </section>
-
-      {/* ===== Popup Form ===== */}
-      {showForm && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-          <Card className="w-full max-w-lg p-8 relative">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute top-3 right-3"
-              onClick={() => setShowForm(false)}
-            >
-              <X className="w-5 h-5" />
-            </Button>
-
-            <h2 className="text-2xl font-bold mb-6 text-gradient text-center">
-              Apply for {selectedJob}
-            </h2>
-
-            <form onSubmit={sendEmail} className="space-y-4">
-              <Input
-                type="text"
-                name="from_name"
-                placeholder="Your Name"
-                value={formData.from_name}
-                onChange={handleChange}
-                required
-              />
-              <Input
-                type="email"
-                name="from_email"
-                placeholder="Your Email"
-                value={formData.from_email}
-                onChange={handleChange}
-                required
-              />
-              <Input
-                type="text"
-                name="job_title"
-                value={formData.job_title}
-                readOnly
-                className="bg-muted cursor-not-allowed"
-              />
-              <Textarea
-                name="message"
-                placeholder="Tell us why you’re a great fit..."
-                value={formData.message}
-                onChange={handleChange}
-                required
-              />
-              <Button type="submit" className="w-full glow-blue">
-                Submit Application
-              </Button>
-              {statusMessage && (
-                <p className="text-center text-sm text-primary mt-2">{statusMessage}</p>
-              )}
-            </form>
-          </Card>
-        </div>
-      )}
     </div>
   );
 }

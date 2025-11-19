@@ -50,7 +50,7 @@ export default function Industries() {
       <section className="py-20" data-testid="section-industries">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
-          <motion.div
+          /*<motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -73,14 +73,14 @@ export default function Industries() {
           </motion.div>
 
           {/* Industry Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
+          /*<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
             {industries.map((industry, index) => (
               <IndustryCard key={index} {...industry} index={index} />
             ))}
           </div>
 
           {/* CTA Section */}
-          <motion.div
+          /*<motion.div
             className="text-center p-12 glassmorphism rounded-md border border-primary/30"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -26,6 +26,11 @@ export default function Services() {
           icon: Building2,
           description:
             "We deliver professional facility management services designed to enhance operational efficiency, safety, and sustainability. From maintenance scheduling and vendor coordination to asset upkeep and energy optimization, our team ensures every property functions at peak performance.",
+          subcategories: [
+            { title: "Physical Security", icon: Shield },
+            { title: "Maintenance", icon: Hammer },
+            { title: "Soft Services", icon: Users },
+          ],
         },
         {
           title: "Real Estate",
@@ -81,7 +86,7 @@ export default function Services() {
       title: "Manpower Management",
       icon: Users,
       description:
-        "We connect businesses with skilled professionals across sectors such as facility management, construction, engineering, and corporate operations. Our manpower solutions include recruitment, staffing, training, and on-site supervision — ensuring that every project is powered by capable, reliable people.",
+        "We provide manpower solutions for a variety of companies including IT, BPO, corporate offices, and industrial setups. Our services include recruitment, staffing, training, and on-site supervision — ensuring every project is powered by capable, reliable resources.",
     },
   ];
 
@@ -147,7 +152,7 @@ export default function Services() {
                             </p>
                           )}
 
-                          {/* Nested Real Estate subcategories */}
+                          {/* Nested subcategories */}
                           {sub.subcategories && (
                             <div className="mt-4 space-y-2">
                               {sub.subcategories.map((subsub, subIdx) => (
